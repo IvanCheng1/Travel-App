@@ -48,14 +48,14 @@ const postWeather = async(url, data) => {
 
 
 // function to check if button is clicked?
-function clickBtn(btn) {
+export function clickBtn(btn) {
     btn.addEventListener('click', function(e) {
         submit();
     })
 }
 
 // function to submit when return is pressed
-function returnSubmit(box) {
+export function returnSubmit(box) {
     box.addEventListener("keydown", function(e) {
         // Enter is pressed
         if (e.keyCode == 13) { submit(); }
@@ -101,7 +101,7 @@ function submit() {
 
 // update UI function
 // fetches previous weather data and update UI with latest journal / weather
-const updateUI = async() => {
+export const updateUI = async() => {
     const request = await fetch('/get');
 
     try {
@@ -128,11 +128,11 @@ const updateUI = async() => {
 
 
 // main function once DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const generateBtn = document.getElementById('generate');
-    const feelingsBox = document.getElementById("feelings");
+// document.addEventListener('DOMContentLoaded', () => {
+//     const generateBtn = document.getElementById('generate');
+//     const feelingsBox = document.getElementById("feelings");
 
-    updateUI();
-    clickBtn(generateBtn);
-    returnSubmit(feelingsBox);
-})
+//     updateUI();
+//     clickBtn(generateBtn);
+//     returnSubmit(feelingsBox);
+// })
