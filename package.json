@@ -1,0 +1,36 @@
+{
+    "name": "travel-app",
+    "version": "1.0.0",
+    "description": "Final project for Udacity's Front End Developer Programme.",
+    "main": "webpack.dev.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node src/server/server.js",
+        "build-prod": "webpack --config webpack.prod.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IvanCheng1/Travel-App.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@babel/polyfill": "^7.10.1",
+        "cors": "^2.8.5",
+        "css-loader": "^3.6.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mini-css-extract-plugin": "^0.9.0",
+        "node-fetch": "^2.6.0",
+        "node-fetch-polyfill": "^2.0.6",
+        "node-sass": "^4.14.1",
+        "sass-loader": "^8.0.2",
+        "style-loader": "^1.2.1",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.11"
+    },
+    "bugs": {
+        "url": "https://github.com/IvanCheng1/Travel-App/issues"
+    },
+    "homepage": "https://github.com/IvanCheng1/Travel-App#readme"
+}
