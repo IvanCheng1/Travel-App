@@ -1,4 +1,4 @@
-import { updateUI, clickBtn, returnSubmit } from "./js/app.js"
+import { updateUI, clickBtn, returnSubmit, postCity } from "./js/app.js"
 
 import './styles/style.scss'
 
@@ -7,13 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generate');
     const feelingsBox = document.getElementById("feelings");
 
+
     updateUI();
     clickBtn(generateBtn);
     returnSubmit(feelingsBox);
+
 })
 
 export {
     updateUI,
     clickBtn,
-    returnSubmit
+    returnSubmit,
+    postCity
 }
