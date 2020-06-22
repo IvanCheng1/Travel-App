@@ -1,5 +1,5 @@
-// const dotenv = require('dotenv')
-// dotenv.config()
+const dotenv = require('dotenv')
+dotenv.config()
 
 // Require Express to run server and routes
 const express = require('express');

@@ -1,5 +1,3 @@
-import { ContextReplacementPlugin } from "webpack";
-
 /* Global Variables */
 const key = 'bec924968d3229ad57b29bcfa721be83&units=imperial';
 const baseUrl = 'api.openweathermap.org/data/2.5/weather?';
