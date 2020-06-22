@@ -23,9 +23,9 @@ app.use(express.static('dist'))
 
 console.log(__dirname)
 
-
 // keys
 const API_GEO = process.env.GEONAMES_USERNAME
+const API_WEATHERBIT = process.env.WEATHERBIT_APIKEY
 
 
 app.get('/', function(req, res) {
@@ -40,36 +40,50 @@ app.get('/get', (request, response) => {
     console.log("here")
 });
 
-// POST route
+// POST route for geonames API
 app.post('/geo', async(request, response) => {
-
-    // console.log(request.body)
     const fullGeo = `http://api.geonames.org/postalCodeSearchJSON?placename=${request.body.city}&country=${request.body.country}&username=${API_GEO}&maxRows=1`
-
-    // console.log(fullGeo)
     const results = await fetch(fullGeo)
-
     try {
         const result = await results.json()
-
-        // console.log(result) 
         response.send(result)
     } catch (error) {
         console.log(error)
     }
-
 });
 
-// POST route
-app.post('/post', (request, response) => {
-    let newPost = {}
-    newPost['temperature'] = request.body.temperature;
-    newPost['date'] = request.body.date;
-    newPost['content'] = request.body.content;
-    newPost['location'] = request.body.location;
-    projectData.push(newPost);
-    response.send('post received');
+
+// POST route for weatherbit API
+app.post('/weather', async(request, response) => {
+    if (request.body.historic) {
+        // use historic weather forecast
+        console.log('using historic weather forecast')
+        var baseUrl = 'https://api.weatherbit.io/v2.0/history/daily?'
+        var startDate = `&start_date=${request.body.startDate}`
+        var endDate = `&end_date=${request.body.endDate}`
+
+    } else {
+        var i = request.body.daysToStartDate
+        var baseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?'
+        var startDate = ''
+        var endDate = ''
+    }
+
+    const lat = request.body.lat
+    const lon = request.body.lon
+    const fullUrl = `${baseUrl}lat=${lat}&lon=${lon}&key=${API_WEATHERBIT}${startDate}${endDate}`
+    console.log(fullUrl)
+    const results = await fetch(fullUrl)
+
+    try {
+        const result = await results.json()
+        console.log(result['data'][i])
+        response.send(result['data'][i])
+    } catch (error) {
+        console.log(error)
+    }
 });
+
 
 // Setup Server
 const PORT = process.env.PORT || 5000;

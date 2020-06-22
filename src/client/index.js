@@ -7,10 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generate');
     const feelingsBox = document.getElementById("feelings");
 
-
     updateUI();
     clickBtn(generateBtn);
-    returnSubmit(feelingsBox);
+    // returnSubmit(feelingsBox);
 
 })
 

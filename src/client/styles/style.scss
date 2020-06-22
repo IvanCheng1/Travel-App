@@ -6,8 +6,8 @@ body {
 }
 
 #app {
-    display: grid;
-    /* grid-auto-rows: minmax(150px, auto); */
+    // display: grid;
+    grid-auto-rows: minmax(150px, auto);
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "L" "R";
@@ -24,14 +24,23 @@ body {
 }
 
 .holder {
-    /* margin: auto; */
     display: grid;
     text-align: center;
+}
+
+.button {
+    margin: auto;
+    display: grid;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px
 }
 
 .entry {
     background: rgba(94, 113, 155, 0.4);
     border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px
 }
 
 #entryHolder {
@@ -45,7 +54,7 @@ body {
 #content {}
 
 .box {
-    /* border: 5px solid white; */
+    border: 5px solid red;
 }
 
 .headline {

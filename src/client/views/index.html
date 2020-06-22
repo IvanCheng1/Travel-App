@@ -10,7 +10,7 @@
 
 <body>
     <div id="app">
-        <div class="L box">
+        <div class="box">
             <div class="holder headline">
                 Travel App
             </div>
@@ -23,20 +23,28 @@
                 <label for="country">Enter Country here</label>
                 <input type="text" id='postCountry' placeholder="Enter country here">
             </div>
-            <div class="holder feel">
-                <label for="feelings">How are you feeling today?</label>
-                <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
+            <!-- <div class="holder feel"> -->
+            <!-- <label for="feelings">How are you feeling today?</label> -->
+            <!-- <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea> -->
+            <!-- <button id="generate" type="submit"> <span>Generate </span></button> -->
+            <!-- </div> -->
+            <div class="holder date">
+                <label for="startDate">Enter start date here</label>
+                <input type="date" id='postStartDate' placeholder="24-06-2020">
+            </div>
+            <div class="holder date">
+                <label for="endDate">Enter end date here</label>
+                <input type="date" id='postEndDate'>
+            </div>
+            <div class="holder button">
                 <button id="generate" type="submit"> <span>Generate </span></button>
             </div>
+
         </div>
-        <div class="R box">
+        <div class="box">
             <div class="holder entry">
                 <div class="title">Future Holidays</div>
                 <div id="entryHolder">
-                    <div id="city"></div>
-                    <div id="country"></div>
-                    <div id="temp"></div>
-                    <div id="content"></div>
                 </div>
             </div>
         </div>
