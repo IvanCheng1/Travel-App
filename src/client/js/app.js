@@ -1,6 +1,16 @@
 /* Global Variables */
 const key = 'bec924968d3229ad57b29bcfa721be83&units=imperial';
 const baseUrl = 'api.openweathermap.org/data/2.5/weather?';
+var fakeDb = [{
+    city: "York",
+    country: "England",
+    daysToStartDate: 0,
+    max_temp: 24.3,
+    min_temp: 13.3,
+    startDate: "2020-06-23",
+    picture: "https://pixabay.com/get/57e8d6454e53a914f1dc84609629307f123bd6ec5b4c704c7c2d72d4944ac15b_640.jpg"
+}]
+
 var db = []
 
 // Create a new date instance dynamically with JS
@@ -30,8 +40,11 @@ export const postCity = async() => {
     })
     try {
         const res = await response.json()
-        const targetCity = res['postalCodes'][0]
-        return targetCity
+        const targetCity = res['geonames'][0]
+        if (targetCity) {
+            return targetCity
+        }
+        throw new Error("City not found")
     } catch (e) {
         alert('City not found')
         console.log(e)
@@ -42,7 +55,10 @@ export const postCity = async() => {
 // function to check if button is clicked?
 export function clickBtn(btn) {
     btn.addEventListener('click', function(e) {
-        submit();
+
+        if (checkCity()) {
+            submit();
+        }
 
         // updateUI();
     })
@@ -89,6 +105,32 @@ export const postWeather = async(city, country, lat, lon, dates) => {
 }
 
 
+export const postPicture = async(city, country) => {
+    const url = `http://localhost:5000/pixabay`
+
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            city: city,
+            country: country
+        })
+    })
+    try {
+        const res = await response.json()
+        console.log("pic", res['webformatURL'])
+            // const targetCity = res['postalCodes'][0]
+        return res['webformatURL']
+    } catch (e) {
+        // alert('City not found')
+        console.log(e)
+    }
+}
+
+
 
 // function to submit when return is pressed
 // export function returnSubmit(box) {
@@ -106,15 +148,16 @@ async function submit() {
 
     await postCity()
         .then((targetCity) => {
-            const city = targetCity['placeName']
-            const country = targetCity['adminName1']
+            const city = targetCity['name']
+            const country = targetCity['countryName']
             const lat = targetCity['lat']
             const lon = targetCity['lng']
             const dates = getDates()
 
             const weather = postWeather(city, country, lat, lon, dates)
+            const picture = postPicture(city, country)
 
-            const all = Promise.all([weather, city, country, dates]).then((values) => {
+            const all = Promise.all([weather, city, country, dates, picture]).then((values) => {
                 return values
             })
             return all
@@ -141,18 +184,20 @@ function addDataToUI() {
     holder.innerHTML = ''
     for (let i of db) {
         holder.innerHTML += `
-            <h4>City: ${i['city']}
-            </h4>
-            <h4>max temp: ${i['max_temp']}
-            </h4>
-            <h4>start date: ${i['startDate']}
-            </h4>
+            <div class='holiday'>
+            <div class='holiday-picture'><img src=${i['picture']}></div>
+                <h4>${i['city']}, ${i['country']}</h4>
+                <h4>max temp: ${i['max_temp']}
+                </h4>
+                <h4>start date: ${i['startDate']}
+                </h4>
+            </div>
         `
     }
 }
 
 function addDataToDb(data) {
-    // console.log(data)
+    console.log("addDataToDb", data)
 
     let newData = {
         city: data[1],
@@ -160,7 +205,8 @@ function addDataToDb(data) {
         startDate: data[3]['startDate'],
         daysToStartDate: data[3]['daysToStartDate'],
         max_temp: data[0]['max_temp'],
-        min_temp: data[0]['min_temp']
+        min_temp: data[0]['min_temp'],
+        picture: data[4]
     }
 
     db.push(newData)
@@ -169,6 +215,9 @@ function addDataToDb(data) {
 
 export const updateUI = async() => {
     defaultDates()
+
+    // temp
+    addDataToUI()
 
     // let targetCity = await postCity()
     // const city = targetCity['placeName']
@@ -214,4 +263,13 @@ function getDates() {
         daysToEndDate: Math.trunc(daysToStartDate) + length,
         length: length
     }
+}
+
+
+function checkCity() {
+    if (document.getElementById('postCity').value === '') {
+        alert("Please enter a city")
+        return false
+    }
+    return true
 }
