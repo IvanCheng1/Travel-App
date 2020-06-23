@@ -15,21 +15,23 @@
                 Travel App
             </div>
             <p>This is an app. This is an app. This is an app. This is an app. This is an app. This is an app. This is an app. This is an app. This is an app. This is an app. </p>
-            <div class="holder city">
-                <label for="city">Destination</label>
-                <input type="text" id='postCity' placeholder="London, New York...">
-            </div>
-            <div class="holder country">
-                <label for="country">Country Code (Optional)</label>
-                <input type="text" id='postCountry' placeholder="GB, US...">
-            </div>
-            <div class="holder date">
-                <label for="startDate">Enter start date here</label>
-                <input type="date" id='postStartDate'>
-            </div>
-            <div class="holder date">
-                <label for="endDate">Enter end date here</label>
-                <input type="date" id='postEndDate'>
+            <div class='inputs'>
+                <div class="holder city box">
+                    <label for="city">Destination</label>
+                    <input type="text" id='postCity' placeholder="London, New York...">
+                </div>
+                <div class="holder country box">
+                    <label for="country">Country Code (Optional)</label>
+                    <input type="text" id='postCountry' placeholder="GB, US...">
+                </div>
+                <div class="holder date box">
+                    <label for="startDate">Enter start date here</label>
+                    <input type="date" id='postStartDate'>
+                </div>
+                <div class="holder date box">
+                    <label for="endDate">Enter end date here</label>
+                    <input type="date" id='postEndDate'>
+                </div>
             </div>
             <div class="holder button">
                 <button id="generate" type="submit"> <span>Submit</span></button>
@@ -37,8 +39,8 @@
 
         </div>
         <div class="box">
-            <div class="holder entry">
-                <div class="title">Future Holidays</div>
+            <div class="holder ">
+                <div class="title" id="HolidaysTitle">Holidays coming up</div>
                 <div id="entryHolder">
                     <!-- Holidays go here from JS-->
                 </div>

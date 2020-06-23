@@ -62,12 +62,11 @@ export function clickBtn(btn) {
 export const postWeather = async(city, country, lat, lon, dates) => {
     const url = `http://localhost:5000/weather`
 
-    if (dates['daysToEndDate'] > 16) {
-        var historic = true
-        console.log('using historic weather forecast')
+    if (dates['daysToEndDate'] > 16 && dates['daysToEndDate'] < 0) {
+        // too far away to get forecast
+        var future = true
     } else {
-        var historic = false
-        console.log('using weather forecast')
+        var future = false
     }
 
     const response = await fetch(url, {
@@ -81,10 +80,11 @@ export const postWeather = async(city, country, lat, lon, dates) => {
             country: country,
             lat: lat,
             lon: lon,
-            historic: historic,
+            future: future,
             daysToStartDate: dates['daysToStartDate'],
             startDate: dates['startDate'],
-            endDate: dates['endDate']
+            endDate: dates['endDate'],
+            length: dates['length']
         })
     })
     try {
@@ -183,25 +183,65 @@ function addDataToUI() {
 
         // const days = entry['daysToStartDate']
 
+        let weather = ''
+
+        if (entry['daysToEndDate'] >= 0 && entry['daysToEndDate'] <= 16) {
+            // show day by day forecast
+
+            weather += `
+                <h4 style="margin-bottom: 0px">
+                    Weather breakdown
+                </h4>
+            `
+
+            for (let i in entry['weather']) {
+                let weatherDay = entry['weather'][i]
+                    // console.log(weatherDay['weather']['description'])
+
+                weather += `
+                    <div class="description-day">
+                        Day ${parseInt(i)+1}: High: ${weatherDay['max_temp']} Low: ${weatherDay['min_temp']} <br>
+                        ${weatherDay['weather']['description']}
+                    </div>
+
+                `
+            }
+        } else {
+            // show today forecast
+            let weatherDay = entry['weather'][0]
+
+            weather = `
+                <h4 style="margin-bottom: 0px">
+                    Current weather
+                </h4>
+                <div class="description-day">
+                    High: ${weatherDay['max_temp']} Low: ${weatherDay['min_temp']} <br>
+                    ${weatherDay['weather']['description']}
+                </div>
+
+                `
+
+        }
+
         holder.innerHTML += `
             <div class='holiday' id='${i}'>
                 <div class='holiday-picture'><img src=${entry['picture']}></div>
-                <h4 class='holiday-destination'>${location}</h4>
-
-                <div class="countdown">
-                    Days to holiday: ${entry['daysToStartDate']}
-                </div>
+                <div class='description'>
                 
-                <div>
-                    departure date: ${entry['startDate']}
-                </div>
-                <div>
-                    max temp: ${entry['max_temp']}
+                    <h4 class='holiday-destination' style="margin-bottom: 0px">${location}</h4>
+                    <div>
+                        Departure in ${entry['daysToStartDate']} days on ${entry['startDate']}<br>
+                        Length of trip: ${entry['length']} days
+                    </div>
+                    
+                    
+                    
+                    ${weather}
+
                 </div>
                 <div class="delete">
-                    <button>delete</button>
+                    <button type="submit"> <span>Remove trip</span></button>
                 </div>
-
             </div>
         `
     }
@@ -215,9 +255,10 @@ function addDataToDb(data) {
         country: data[2],
         startDate: data[3]['startDate'],
         daysToStartDate: data[3]['daysToStartDate'],
-        max_temp: data[0]['max_temp'],
-        min_temp: data[0]['min_temp'],
-        picture: data[4]
+        daysToEndDate: data[3]['daysToEndDate'],
+        weather: data[0],
+        picture: data[4],
+        length: data[3]['length']
     }
 
     // push data to db variable
@@ -252,7 +293,11 @@ export const updateUI = async() => {
     // add data to UI
     addDataToUI()
 
+    // add delete btn to each holiday
     deleteBtn()
+
+    // if db is empty, remove "Holidays coming up" for a cleaner look
+    emptyDb()
 }
 
 
@@ -269,8 +314,9 @@ function deleteBtn() {
             const id = e.path[2].id
 
             // find the name of the holiday
-            // console.log(e.path[2].childNodes[3].textContent)
-            const name = e.path[2].childNodes[3].textContent
+            // console.log(e.path[3].children[1].textContent)
+            const name = e.path[3].children[1].textContent.trim().split('\n')[0]
+                // console.log(name.trim().split('\n')[0])
 
             if (confirm(`Are you sure you want to delete your holiday to ${name}?`)) {
                 // get db from local storage and splice
@@ -281,7 +327,6 @@ function deleteBtn() {
                 postLocalStorage(db)
                 updateUI()
             }
-
         })
     }
 }
@@ -333,7 +378,7 @@ function getDates() {
         endDate: endDate,
         daysToStartDate: Math.trunc(daysToStartDate),
         daysToEndDate: Math.trunc(daysToStartDate) + length,
-        length: length
+        length: length + 1
     }
 }
 
@@ -360,4 +405,19 @@ export function detectDate(item) {
     item.addEventListener("input", () => {
         defaultDates(item)
     })
+}
+
+
+function emptyDb() {
+    // grab title
+    let title = document.getElementById('HolidaysTitle')
+
+    // if db is empty, remove title
+    if (db.length === 0) {
+        title.innerText = ''
+    } else {
+        if (!title.innerText) {
+            title.innerText = 'Holidays coming up'
+        }
+    }
 }

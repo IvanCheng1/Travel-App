@@ -51,28 +51,25 @@ app.post('/geo', async(request, response) => {
 
 // POST route for weatherbit API
 app.post('/weather', async(request, response) => {
-    if (request.body.historic) {
-        // use historic weather forecast
-        console.log('using historic weather forecast')
-        var baseUrl = 'https://api.weatherbit.io/v2.0/history/daily?'
-        var startDate = `&start_date=${request.body.startDate}`
-        var endDate = `&end_date=${request.body.endDate}`
+    if (request.body.future) {
+        // use today weather forecast
+        var i = 0
+        var length = 1
 
     } else {
         var i = request.body.daysToStartDate
-        var baseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?'
-        var startDate = ''
-        var endDate = ''
+        var length = request.body.length + i
     }
 
+    var baseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?'
     const lat = request.body.lat
     const lon = request.body.lon
-    const fullUrl = `${baseUrl}lat=${lat}&lon=${lon}&key=${API_WEATHERBIT}${startDate}${endDate}`
+    const fullUrl = `${baseUrl}lat=${lat}&lon=${lon}&key=${API_WEATHERBIT}`
     const results = await fetch(fullUrl)
 
     try {
         const result = await results.json()
-        response.send(result['data'][i])
+        response.send(result['data'].slice(i, length))
     } catch (error) {
         console.log(error)
     }

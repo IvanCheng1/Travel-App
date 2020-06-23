@@ -1,0 +1,128 @@
+#app {
+    // display: grid;
+    // grid-auto-rows: minmax(150px, auto);
+    // grid-template-columns: 1fr 1fr;
+    // grid-template-rows: 1fr;
+    // grid-template-areas: "L" "R";
+    // height: 100vh;
+    /* background: #f23557; */
+    color: #030b0b;
+    justify-content: center;
+    grid-gap: 1em;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    margin: 15px;
+    padding: 15px;
+    /* border: 5px solid white; */
+}
+
+.inputs {}
+
+.holder {
+    display: grid;
+    text-align: center;
+}
+
+.entry {
+    background: rgba(94, 113, 155, 0.4);
+    border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+#entryHolder {
+    margin-top: 10px;
+}
+
+.holiday {
+    background: rgba(208, 99, 99, 0.4);
+    // border-radius: 15px;
+    padding-top: 25px;
+    // margin-top: 15px;
+    // margin-bottom: 15px
+}
+
+.holiday-picture img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    // border-radius: 10px;
+}
+
+.description {
+    // border: 3px solid blue;
+}
+
+.description-day {
+    padding-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-size: 27px;
+    // width: 70%;
+    margin: auto;
+    text-align: left;
+    padding-top: 25px;
+    /* padding-bottom: 15px; */
+}
+
+input {
+    display: block;
+    height: 60px;
+    // width: 66%;
+    background: #22b2da;
+    color: #041f3c;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    margin: auto;
+    border-radius: 15px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+textarea {
+    background: #22b2da;
+    color: #041f3c;
+    width: 66%;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2%;
+    border-radius: 15px;
+}
+
+
+/* Style for Placeholder Text*/
+
+::placeholder {
+    /* Firefox, Chrome, Opera */
+    color: #4a627b;
+    font-family: 'Oswald', sans-serif;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #4a627b;
+    font-family: 'Oswald', sans-serif;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #4a627b;
+    font-family: 'Oswald', sans-serif;
+}
+
+@media(min-width:700px) {
+    .inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 80%;
+        margin: auto;
+    }
+}

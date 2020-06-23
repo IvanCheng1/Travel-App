@@ -1,0 +1,29 @@
+body {
+    background: rgb(136, 203, 171);
+    background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(202, 247, 244) 100%);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+p {
+    width: 70%;
+    margin: auto;
+    padding-bottom: 20px;
+}
+
+// h1 {
+//     font-size: 2.5em;
+//     text-align: center;
+// }
+// main {
+//     flex: 2;
+//     padding-bottom: 20px;
+// }
+// section {
+//     max-width: 800px;
+//     margin: 50px auto;
+// }

@@ -1,0 +1,49 @@
+.delete {
+    padding: 15px;
+}
+
+.button {
+    margin: auto;
+    display: grid;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px
+}
+
+button {
+    width: 70%;
+    height: 50px;
+    background: #3b4a6b;
+    color: #83d8ac;
+    font-size: 26px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    box-shadow: 2px 4px 5px #444;
+    transition: 0.4s;
+    cursor: pointer;
+    margin: auto;
+}
+
+button span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+button:hover span {
+    padding-right: 20px;
+}
+
+button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
