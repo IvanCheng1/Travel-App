@@ -1,6 +1,4 @@
 /* Global Variables */
-const key = 'bec924968d3229ad57b29bcfa721be83&units=imperial';
-const baseUrl = 'api.openweathermap.org/data/2.5/weather?';
 var fakeDb = [{
     city: "York",
     country: "England",
@@ -16,10 +14,6 @@ var db = []
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes();
-
-function convertFtoC(F) {
-    return (F - 32) * 5 / 9
-}
 
 
 export const postCity = async() => {
@@ -47,7 +41,7 @@ export const postCity = async() => {
         throw new Error("City not found")
     } catch (e) {
         alert('City not found')
-        console.log(e)
+        console.log("postCity function error", e)
     }
 }
 
@@ -69,7 +63,6 @@ export const postWeather = async(city, country, lat, lon, dates) => {
     const url = `http://localhost:5000/weather`
 
     if (dates['daysToEndDate'] > 16) {
-        // use historic weather forecast
         var historic = true
         console.log('using historic weather forecast')
     } else {
@@ -96,11 +89,9 @@ export const postWeather = async(city, country, lat, lon, dates) => {
     })
     try {
         const res = await response.json()
-            // console.log(res)
         return res
     } catch (e) {
-        // alert('City not found')
-        console.log(e)
+        console.log("postWeather function error", e)
     }
 }
 
@@ -121,12 +112,9 @@ export const postPicture = async(city, country) => {
     })
     try {
         const res = await response.json()
-        console.log("pic", res['webformatURL'])
-            // const targetCity = res['postalCodes'][0]
         return res['webformatURL']
     } catch (e) {
-        // alert('City not found')
-        console.log(e)
+        console.log("postPicture function error", e)
     }
 }
 
@@ -143,9 +131,6 @@ export const postPicture = async(city, country) => {
 
 // function to get data from page and submit
 async function submit() {
-
-
-
     await postCity()
         .then((targetCity) => {
             const city = targetCity['name']
@@ -163,11 +148,7 @@ async function submit() {
             return all
         })
         .then((data) => {
-            // console.log('weather', weatherData)
             addDataToDb(data)
-                // console.log(db)
-                // addDataToUI(weatherData)
-            addDataToUI()
         })
         .then(() => {
             updateUI();
@@ -177,12 +158,11 @@ async function submit() {
 
 function addDataToUI() {
     const holder = document.getElementById('entryHolder')
-
-    db.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
-    console.log(db)
+    const local = getLocalStorage()
+    local.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
 
     holder.innerHTML = ''
-    for (let i of db) {
+    for (let i of local) {
         holder.innerHTML += `
             <div class='holiday'>
             <div class='holiday-picture'><img src=${i['picture']}></div>
@@ -196,9 +176,9 @@ function addDataToUI() {
     }
 }
 
-function addDataToDb(data) {
-    console.log("addDataToDb", data)
 
+// add data to 
+function addDataToDb(data) {
     let newData = {
         city: data[1],
         country: data[2],
@@ -209,14 +189,32 @@ function addDataToDb(data) {
         picture: data[4]
     }
 
+    // push data to db variable
     db.push(newData)
+
+    // push db to localStorage
+    postLocalStorage(db)
+}
+
+
+
+function postLocalStorage(db) {
+    localStorage.setItem('db', JSON.stringify(db))
+}
+
+
+function getLocalStorage() {
+    return JSON.parse(localStorage.getItem('db'))
 }
 
 
 export const updateUI = async() => {
+    // set dates on form
+    db = getLocalStorage()
     defaultDates()
 
-    // temp
+
+    // add data to UI
     addDataToUI()
 
     // let targetCity = await postCity()
@@ -233,6 +231,9 @@ export const updateUI = async() => {
 
 }
 
+
+// set default dates on input form
+// return none
 function defaultDates() {
     let today = new Date();
     let tomorrow = new Date();
@@ -246,6 +247,9 @@ function defaultDates() {
     document.getElementById('postEndDate').value = format(tomorrow)
 }
 
+
+// get date information from input form
+// return an object with start/end dates etc
 function getDates() {
     const startDate = document.getElementById('postStartDate').value;
     const endDate = document.getElementById('postEndDate').value;
@@ -266,6 +270,8 @@ function getDates() {
 }
 
 
+// check if input form for city is empty or not
+// return true if exist, false if not
 function checkCity() {
     if (document.getElementById('postCity').value === '') {
         alert("Please enter a city")
