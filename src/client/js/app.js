@@ -151,6 +151,7 @@ async function submit() {
             addDataToDb(data)
         })
         .then(() => {
+            clearForm()
             updateUI();
         })
 
@@ -159,18 +160,48 @@ async function submit() {
 function addDataToUI() {
     const holder = document.getElementById('entryHolder')
     const local = getLocalStorage()
+
+    // if local Storage is empty, return
+    if (!local) {
+        return
+    }
+
+    // sort 
     local.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
 
     holder.innerHTML = ''
-    for (let i of local) {
+    for (let i in local) {
+        // just need the number to iterate for delete buttons
+        // otherwise could have used (let i of local)
+        const entry = local[i]
+
+        if (entry['country'] === undefined) {
+            var location = entry['city']
+        } else {
+            var location = `${entry['city']}, ${entry['country']}`
+        }
+
+        // const days = entry['daysToStartDate']
+
         holder.innerHTML += `
-            <div class='holiday'>
-            <div class='holiday-picture'><img src=${i['picture']}></div>
-                <h4>${i['city']}, ${i['country']}</h4>
-                <h4>max temp: ${i['max_temp']}
-                </h4>
-                <h4>start date: ${i['startDate']}
-                </h4>
+            <div class='holiday' id='${i}'>
+                <div class='holiday-picture'><img src=${entry['picture']}></div>
+                <h4 class='holiday-destination'>${location}</h4>
+
+                <div class="countdown">
+                    Days to holiday: ${entry['daysToStartDate']}
+                </div>
+                
+                <div>
+                    departure date: ${entry['startDate']}
+                </div>
+                <div>
+                    max temp: ${entry['max_temp']}
+                </div>
+                <div class="delete">
+                    <button>delete</button>
+                </div>
+
             </div>
         `
     }
@@ -197,7 +228,6 @@ function addDataToDb(data) {
 }
 
 
-
 function postLocalStorage(db) {
     localStorage.setItem('db', JSON.stringify(db))
 }
@@ -209,42 +239,80 @@ function getLocalStorage() {
 
 
 export const updateUI = async() => {
+    // if local storage is null, set db to empty list
+    if (getLocalStorage() === null) {
+        db = []
+    } else {
+        // otherwise, get local storage from previous visits
+        db = getLocalStorage()
+    }
     // set dates on form
-    db = getLocalStorage()
     defaultDates()
-
 
     // add data to UI
     addDataToUI()
 
-    // let targetCity = await postCity()
-    // const city = targetCity['placeName']
-    // const country = targetCity['adminName1']
-    // const lat = targetCity['lat']
-    // const lng = targetCity['lng']
-
-    // console.log(city, country, lat, lng)
-    // document.getElementById('city').innerText = rCity
-    // document.getElementById(`country`).innerText = rCountry
-    // document.getElementById(`content`).innerText = ''
-    // document.getElementById(`temp`).innerText = ''
-
+    deleteBtn()
 }
 
 
-// set default dates on input form
-// return none
-function defaultDates() {
-    let today = new Date();
-    let tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1)
+function deleteBtn() {
+    // get all delete buttons
+    const btns = document.getElementsByClassName('delete')
 
-    function format(date) {
-        return date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2)
+    // loop through all buttons
+    for (let btn of btns) {
+        // add click listener
+        btn.addEventListener('click', e => {
+            // find the id number of the holiday holder
+            // console.log(e.path[2].id)
+            const id = e.path[2].id
+
+            // find the name of the holiday
+            // console.log(e.path[2].childNodes[3].textContent)
+            const name = e.path[2].childNodes[3].textContent
+
+            if (confirm(`Are you sure you want to delete your holiday to ${name}?`)) {
+                // get db from local storage and splice
+                db = getLocalStorage()
+                db.splice(id, 1)
+
+                // update local storage and UI
+                postLocalStorage(db)
+                updateUI()
+            }
+
+        })
+    }
+}
+
+
+// helper func to return date in the form of YYYY-mm-DD
+function format(date) {
+    return date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2)
+}
+
+
+// set default dates on input form, and update end date when start date is filled
+// return none
+export function defaultDates(startItem = null) {
+    // if nothing is passed into function
+    // set default values to today and tomorrow's date
+    if (!startItem) {
+        var start = new Date();
+        var end = new Date();
+
+        // update start date to today
+        document.getElementById('postStartDate').value = format(start)
+    } else {
+        // the start item is passed in => update end date value to start date + 1
+        // init end var
+        var end = new Date(startItem.value);
     }
 
-    document.getElementById('postStartDate').value = format(today)
-    document.getElementById('postEndDate').value = format(tomorrow)
+    // update end date to be 1 day ahead and update form
+    end.setDate(end.getDate() + 1)
+    document.getElementById('postEndDate').value = format(end)
 }
 
 
@@ -278,4 +346,18 @@ function checkCity() {
         return false
     }
     return true
+}
+
+
+function clearForm() {
+    document.getElementById('postCity').value = ''
+    document.getElementById('postCountry').value = ''
+    document.getElementById('postStartDate').value = ''
+    document.getElementById('postEndDate').value = ''
+}
+
+export function detectDate(item) {
+    item.addEventListener("input", () => {
+        defaultDates(item)
+    })
 }

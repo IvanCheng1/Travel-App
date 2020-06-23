@@ -7,11 +7,11 @@ body {
 
 #app {
     // display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "L" "R";
-    height: 100vh;
+    // grid-auto-rows: minmax(150px, auto);
+    // grid-template-columns: 1fr 1fr;
+    // grid-template-rows: 1fr;
+    // grid-template-areas: "L" "R";
+    // height: 100vh;
     /* background: #f23557; */
     color: #030b0b;
     justify-content: center;
@@ -46,8 +46,17 @@ body {
 .holiday {
     background: rgba(208, 99, 99, 0.4);
     // border-radius: 15px;
-    margin-top: 15px;
-    margin-bottom: 15px
+    padding-top: 25px;
+    // margin-top: 15px;
+    // margin-bottom: 15px
+}
+
+.holiday-picture img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    // border-radius: 10px;
 }
 
 #entryHolder {
@@ -84,7 +93,7 @@ body {
 label {
     display: block;
     font-size: 27px;
-    width: 70%;
+    // width: 70%;
     margin: auto;
     text-align: left;
     padding-top: 25px;
@@ -94,7 +103,7 @@ label {
 input {
     display: block;
     height: 60px;
-    width: 66%;
+    // width: 66%;
     background: #22b2da;
     color: #041f3c;
     font-size: 20px;
@@ -183,18 +192,18 @@ button:focus {
 
 ::placeholder {
     /* Firefox, Chrome, Opera */
-    color: #041f3c;
+    color: #4a627b;
     font-family: 'Oswald', sans-serif;
 }
 
 :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #041f3c;
+    color: #4a627b;
     font-family: 'Oswald', sans-serif;
 }
 
 ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #041f3c;
+    color: #4a627b;
     font-family: 'Oswald', sans-serif;
 }

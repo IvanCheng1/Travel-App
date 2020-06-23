@@ -42,7 +42,6 @@ app.post('/geo', async(request, response) => {
     const results = await fetch(fullGeo)
     try {
         const result = await results.json()
-            // console.log(result)
         response.send(result)
     } catch (error) {
         console.log(error)
@@ -69,12 +68,10 @@ app.post('/weather', async(request, response) => {
     const lat = request.body.lat
     const lon = request.body.lon
     const fullUrl = `${baseUrl}lat=${lat}&lon=${lon}&key=${API_WEATHERBIT}${startDate}${endDate}`
-        // console.log(fullUrl)
     const results = await fetch(fullUrl)
 
     try {
         const result = await results.json()
-            // console.log(result['data'][i])
         response.send(result['data'][i])
     } catch (error) {
         console.log(error)
