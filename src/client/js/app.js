@@ -62,8 +62,8 @@ export function clickBtn(btn) {
 export const postWeather = async(city, country, lat, lon, dates) => {
     const url = `http://localhost:5000/weather`
 
-    if (dates['daysToEndDate'] > 16 && dates['daysToEndDate'] < 0) {
-        // too far away to get forecast
+    if (dates['daysToEndDate'] > 16 || dates['daysToEndDate'] < 0) {
+        // too far away to get forecast, or in the past
         var future = true
     } else {
         var future = false
@@ -194,13 +194,13 @@ function addDataToUI() {
                 </h4>
             `
 
-            for (let i in entry['weather']) {
-                let weatherDay = entry['weather'][i]
+            for (let day in entry['weather']) {
+                let weatherDay = entry['weather'][day]
                     // console.log(weatherDay['weather']['description'])
 
                 weather += `
                     <div class="description-day">
-                        Day ${parseInt(i)+1}: High: ${weatherDay['max_temp']} Low: ${weatherDay['min_temp']} <br>
+                        Day ${parseInt(day)+1}: High: ${weatherDay['max_temp']} Low: ${weatherDay['min_temp']} <br>
                         ${weatherDay['weather']['description']}
                     </div>
 
@@ -266,6 +266,8 @@ function addDataToDb(data) {
 
     // push db to localStorage
     postLocalStorage(db)
+        // let test = getLocalStorage()
+        // console.log(test)
 }
 
 
@@ -309,18 +311,26 @@ function deleteBtn() {
     for (let btn of btns) {
         // add click listener
         btn.addEventListener('click', e => {
-            // find the id number of the holiday holder
+            // since the button has "SPAN", need to find whether "SPAN" was shown or not
             // console.log(e.path[2].id)
-            const id = e.path[2].id
+            if (e.path[0].tagName === "SPAN") {
+                var base = e.path[3]
+            } else {
+                var base = e.path[2]
+            }
+
+            // find the id number of the holiday holder
+            let id = base.id
 
             // find the name of the holiday
             // console.log(e.path[3].children[1].textContent)
-            const name = e.path[3].children[1].textContent.trim().split('\n')[0]
-                // console.log(name.trim().split('\n')[0])
+            let name = base.children[1].textContent.trim().split('\n')[0]
 
             if (confirm(`Are you sure you want to delete your holiday to ${name}?`)) {
-                // get db from local storage and splice
+                // get db from local storage, sort in date order and splice
+
                 db = getLocalStorage()
+                db.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
                 db.splice(id, 1)
 
                 // update local storage and UI

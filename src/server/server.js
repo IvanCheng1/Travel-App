@@ -55,7 +55,6 @@ app.post('/weather', async(request, response) => {
         // use today weather forecast
         var i = 0
         var length = 1
-
     } else {
         var i = request.body.daysToStartDate
         var length = request.body.length + i
