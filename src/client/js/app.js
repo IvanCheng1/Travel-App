@@ -5,21 +5,20 @@ var fakeDb = [{
     daysToStartDate: 0,
     max_temp: 24.3,
     min_temp: 13.3,
-    startDate: "2020-06-23",
+    startDate: "2020-07-03",
     picture: "https://pixabay.com/get/57e8d6454e53a914f1dc84609629307f123bd6ec5b4c704c7c2d72d4944ac15b_640.jpg"
 }]
 
 var db = []
 
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes();
-
-
-export const postCity = async() => {
+export const postCity = async(testCity = '') => {
     const url = `http://localhost:5000/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
+
+    if (testCity) {
+        city = testCity
+    }
 
     const response = await fetch(url, {
         method: 'POST',
@@ -53,8 +52,6 @@ export function clickBtn(btn) {
         if (checkCity()) {
             submit();
         }
-
-        // updateUI();
     })
 }
 
@@ -119,16 +116,6 @@ export const postPicture = async(city, country) => {
 }
 
 
-
-// function to submit when return is pressed
-// export function returnSubmit(box) {
-//     box.addEventListener("keydown", function(e) {
-//         Enter is pressed
-//         if (e.keyCode == 13) { submit(); }
-//     });
-// }
-
-
 // function to get data from page and submit
 async function submit() {
     await postCity()
@@ -156,6 +143,7 @@ async function submit() {
         })
 
 }
+
 
 function addDataToUI() {
     const holder = document.getElementById('entryHolder')
@@ -234,8 +222,6 @@ function addDataToUI() {
                         Length of trip: ${entry['length']} days
                     </div>
                     
-                    
-                    
                     ${weather}
 
                 </div>
@@ -248,7 +234,7 @@ function addDataToUI() {
 }
 
 
-// add data to 
+// add data to local variable, then push to local Storage
 function addDataToDb(data) {
     let newData = {
         city: data[1],
@@ -345,7 +331,7 @@ function format(date) {
 
 // set default dates on input form, and update end date when start date is filled
 // return none
-export function defaultDates(startItem = null) {
+function defaultDates(startItem = null) {
     // if nothing is passed into function
     // set default values to today and tomorrow's date
     if (!startItem) {
@@ -406,6 +392,8 @@ function clearForm() {
     document.getElementById('postEndDate').value = ''
 }
 
+
+// function to detect when start date has been inputted
 export function detectDate(item) {
     item.addEventListener("input", () => {
         defaultDates(item)
@@ -413,6 +401,7 @@ export function detectDate(item) {
 }
 
 
+// check if db is empty, then hide title
 function emptyDb() {
     // grab title
     let title = document.getElementById('HolidaysTitle')

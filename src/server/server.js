@@ -21,6 +21,7 @@ app.use(cors());
 // Initialize the main project folder
 app.use(express.static('dist'))
 
+const regeneratorRuntime = require('regenerator-runtime')
 console.log(__dirname)
 
 // keys
@@ -29,10 +30,9 @@ const API_WEATHERBIT = process.env.WEATHERBIT_APIKEY
 const API_PIXABAY = process.env.PIXABAY_APIKEY
 
 
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '.../dist/index.html')
-//     console.log('get root')
-// })
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '.../dist/index.html')
+})
 
 
 // POST route for geonames API
@@ -123,3 +123,5 @@ app.post('/pixabay', async(request, response) => {
 // Setup Server
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => { console.log(`running on localhost:${PORT}`) });
+
+module.exports = app

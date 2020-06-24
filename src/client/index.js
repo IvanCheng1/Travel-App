@@ -1,4 +1,4 @@
-import { updateUI, clickBtn, returnSubmit, postCity, detectDate } from "./js/app.js"
+import { updateUI, clickBtn, detectDate } from "./js/app.js"
 
 import './styles/style.scss'
 
@@ -8,24 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const feelingsBox = document.getElementById("feelings");
     const startDateItem = document.getElementById('postStartDate')
 
-
     updateUI();
     clickBtn(generateBtn);
     detectDate(startDateItem)
-
-    // returnSubmit(feelingsBox);
-
-
-    // start.addEventListener("input", () => {
-    //     console.log("changed")
-    // })
-
 })
 
 export {
     updateUI,
     clickBtn,
-    returnSubmit,
-    postCity,
     detectDate
 }
