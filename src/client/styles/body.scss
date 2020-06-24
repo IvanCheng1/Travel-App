@@ -1,22 +1,8 @@
-#app {
-    // display: grid;
-    // grid-auto-rows: minmax(150px, auto);
-    // grid-template-columns: 1fr 1fr;
-    // grid-template-rows: 1fr;
-    // grid-template-areas: "L" "R";
-    // height: 100vh;
-    /* background: #f23557; */
-    color: #030b0b;
-    justify-content: center;
-    grid-gap: 1em;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    margin: 15px;
-    padding: 15px;
-    /* border: 5px solid white; */
+.inputs {
+    width: 70%;
+    max-width: 700px;
+    margin: auto;
 }
-
-.inputs {}
 
 .holder {
     display: grid;
@@ -35,11 +21,9 @@
 }
 
 .holiday {
-    background: rgba(208, 99, 99, 0.4);
-    // border-radius: 15px;
+    background: rgba(59, 140, 227, 0.4);
     padding-top: 25px;
-    // margin-top: 15px;
-    // margin-bottom: 15px
+    margin-bottom: 25px
 }
 
 .holiday-picture img {
@@ -47,7 +31,6 @@
     margin-left: auto;
     margin-right: auto;
     width: 90%;
-    // border-radius: 10px;
 }
 
 .description {
@@ -60,41 +43,24 @@
 
 label {
     display: block;
-    font-size: 27px;
-    // width: 70%;
+    font-size: 24px;
     margin: auto;
     text-align: left;
-    padding-top: 25px;
-    /* padding-bottom: 15px; */
+    padding-top: 15px;
 }
 
 input {
     display: block;
-    height: 60px;
-    // width: 66%;
+    height: 50px;
+    width: 66%;
     background: #22b2da;
     color: #041f3c;
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Oswald', sans-serif;
     border: none;
     margin: auto;
-    border-radius: 15px;
     padding-left: 2%;
     padding-right: 2%;
-}
-
-textarea {
-    background: #22b2da;
-    color: #041f3c;
-    width: 66%;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 2%;
-    border-radius: 15px;
 }
 
 

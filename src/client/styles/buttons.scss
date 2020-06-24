@@ -6,12 +6,13 @@
     margin: auto;
     display: grid;
     text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px
+    padding-top: 20px;
+    padding-bottom: 20px
 }
 
 button {
     width: 70%;
+    max-width: 350px;
     height: 50px;
     background: #3b4a6b;
     color: #83d8ac;

@@ -266,8 +266,6 @@ function addDataToDb(data) {
 
     // push db to localStorage
     postLocalStorage(db)
-        // let test = getLocalStorage()
-        // console.log(test)
 }
 
 
@@ -312,7 +310,6 @@ function deleteBtn() {
         // add click listener
         btn.addEventListener('click', e => {
             // since the button has "SPAN", need to find whether "SPAN" was shown or not
-            // console.log(e.path[2].id)
             if (e.path[0].tagName === "SPAN") {
                 var base = e.path[3]
             } else {
@@ -323,12 +320,10 @@ function deleteBtn() {
             let id = base.id
 
             // find the name of the holiday
-            // console.log(e.path[3].children[1].textContent)
             let name = base.children[1].textContent.trim().split('\n')[0]
 
             if (confirm(`Are you sure you want to delete your holiday to ${name}?`)) {
                 // get db from local storage, sort in date order and splice
-
                 db = getLocalStorage()
                 db.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
                 db.splice(id, 1)
