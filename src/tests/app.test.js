@@ -1,9 +1,8 @@
 import "babel-polyfill";
-import { postCity, postWeather, postPicture } from '../client/js/app'
-
-test('post city to geonames and fetch city coordinates', () => {
+import { postCity } from '../client/js/app'
 
 
-    expect(postCity()).toBe(true);
-    // expect(true).toBe(true);
+test('post picture to geonames and fetch city coordinates', () => {
+
+    expect(typeof postCity()).toBe("object");
 });

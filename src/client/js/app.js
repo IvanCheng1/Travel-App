@@ -1,24 +1,10 @@
 /* Global Variables */
-var fakeDb = [{
-    city: "York",
-    country: "England",
-    daysToStartDate: 0,
-    max_temp: 24.3,
-    min_temp: 13.3,
-    startDate: "2020-07-03",
-    picture: "https://pixabay.com/get/57e8d6454e53a914f1dc84609629307f123bd6ec5b4c704c7c2d72d4944ac15b_640.jpg"
-}]
-
 var db = []
 
-export const postCity = async(testCity = '') => {
+export const postCity = async() => {
     const url = `http://localhost:5000/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
-
-    if (testCity) {
-        city = testCity
-    }
 
     const response = await fetch(url, {
         method: 'POST',
@@ -42,17 +28,6 @@ export const postCity = async(testCity = '') => {
         alert('City not found')
         console.log("postCity function error", e)
     }
-}
-
-
-// function to check if button is clicked?
-export function clickBtn(btn) {
-    btn.addEventListener('click', function(e) {
-
-        if (checkCity()) {
-            submit();
-        }
-    })
 }
 
 
@@ -116,6 +91,17 @@ export const postPicture = async(city, country) => {
 }
 
 
+// function to check if button is clicked?
+export function clickBtn(btn) {
+    btn.addEventListener('click', function(e) {
+
+        if (checkCity()) {
+            submit();
+        }
+    })
+}
+
+
 // function to get data from page and submit
 async function submit() {
     await postCity()
@@ -141,10 +127,10 @@ async function submit() {
             clearForm()
             updateUI();
         })
-
 }
 
 
+// add Data to the page
 function addDataToUI() {
     const holder = document.getElementById('entryHolder')
     const local = getLocalStorage()
@@ -154,38 +140,42 @@ function addDataToUI() {
         return
     }
 
-    // sort 
+    // sort by date
     local.sort((a, b) => (a.daysToStartDate > b.daysToStartDate) ? 1 : -1)
 
+    // clear previous HTML
     holder.innerHTML = ''
     for (let i in local) {
         // just need the number to iterate for delete buttons
         // otherwise could have used (let i of local)
         const entry = local[i]
 
+        // if country is empty, just provide city name
         if (entry['country'] === undefined) {
             var location = entry['city']
         } else {
             var location = `${entry['city']}, ${entry['country']}`
         }
 
-        // const days = entry['daysToStartDate']
-
+        // init weather section
         let weather = ''
 
+        // if trip end date is less than 16 days away, show the weather forecast
         if (entry['daysToEndDate'] >= 0 && entry['daysToEndDate'] <= 16) {
             // show day by day forecast
 
+            // HTML for 'weather breakdown' title
             weather += `
                 <h4 style="margin-bottom: 0px">
                     Weather breakdown
                 </h4>
             `
 
+            // loop through each day of the holiday weather forecast
             for (let day in entry['weather']) {
                 let weatherDay = entry['weather'][day]
-                    // console.log(weatherDay['weather']['description'])
 
+                // and append to 'weather' variable
                 weather += `
                     <div class="description-day">
                         Day ${parseInt(day)+1}: High: ${weatherDay['max_temp']} Low: ${weatherDay['min_temp']} <br>
@@ -195,9 +185,10 @@ function addDataToUI() {
                 `
             }
         } else {
-            // show today forecast
+            // else trip is too far in advance, or in the past - show the current weather forecast
             let weatherDay = entry['weather'][0]
 
+            // current weather HTML title, and weather description 
             weather = `
                 <h4 style="margin-bottom: 0px">
                     Current weather
@@ -208,9 +199,13 @@ function addDataToUI() {
                 </div>
 
                 `
-
         }
 
+        // append everything to holder HTML
+        // unique id - to be used for deletion
+        // picture, destination, countdown, length of trip
+        // weather information from above
+        // delete button
         holder.innerHTML += `
             <div class='holiday' id='${i}'>
                 <div class='holiday-picture'><img src=${entry['picture']}></div>
