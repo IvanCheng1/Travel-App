@@ -31,8 +31,16 @@ It will then display the holiday with a picture of the destination, countdown, a
 3. Run the server by `npm run start`
 4. The local server is hosted on http://localhost:5000/
 
-## APIs used
+#### APIs 
+Please sign up and register for API keys using the links below
 - [Geonames API](http://www.geonames.org/export/web-services.html)
 - [Weatherbit API](https://www.weatherbit.io/api)
 - [Pixabay API](https://pixabay.com/api/docs/)
 
+Then, create a new ```.env``` file in the root of the project
+3. Fill the .env file with your API keys like this:
+```
+GEONAMES_USERNAME=*****************************
+WEATHERBIT_APIKEY=*****************************
+PIXABAY_APIKEY=*****************************
+```
