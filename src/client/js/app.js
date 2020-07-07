@@ -1,12 +1,18 @@
 /* Global Variables */
 var db = []
-console.log("env is:", process.env)
-console.log("port is:", process.env.PORT)
 const PORT = process.env.PORT || 8080;
+
+if (PORT === '5000') {
+    // local
+    const baseUrl = 'http://localhost:5000'
+} else {
+    // heroku
+    const baseUrl = 'https://travel-app-weather.herokuapp.com'
+}
 
 export const postCity = async() => {
     var person = prompt("Port number", "http://localhost:8080");
-    const url = `${person}/geo`
+    const url = `${baseUrl}/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
 
@@ -38,7 +44,7 @@ export const postCity = async() => {
 
 
 export const postWeather = async(city, country, lat, lon, dates) => {
-    const url = `http://localhost:${PORT}/weather`
+    const url = `${baseUrl}/weather`
 
     if (dates['daysToEndDate'] > 16 || dates['daysToEndDate'] < 0) {
         // too far away to get forecast, or in the past
@@ -75,7 +81,7 @@ export const postWeather = async(city, country, lat, lon, dates) => {
 
 
 export const postPicture = async(city, country) => {
-    const url = `http://localhost:${PORT}/pixabay`
+    const url = `${baseUrl}/pixabay`
 
     const response = await fetch(url, {
         method: 'POST',
