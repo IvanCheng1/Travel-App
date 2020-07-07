@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Journal</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div class="wrapper">
+            <div class="holder headline">
+                Travel App
+            </div>
+            <p>This Travel App allows you to log your future travels, and show you the weather forecast if your trip is soon. Otherwise, the current weather is displayed.</p>
+            <div class='inputs'>
+                <div class="holder city">
+                    <label for="city">Destination</label>
+                    <input type="text" id='postCity' placeholder="London, New York...">
+                </div>
+                <div class="holder country">
+                    <label for="country">Country Code (Optional)</label>
+                    <input type="text" id='postCountry' placeholder="GB, US...">
+                </div>
+                <div class="holder date">
+                    <label for="startDate">Enter start date here</label>
+                    <input type="date" id='postStartDate'>
+                </div>
+                <div class="holder date">
+                    <label for="endDate">Enter end date here</label>
+                    <input type="date" id='postEndDate'>
+                </div>
+            </div>
+            <div class="holder button">
+                <button id="generate" type="submit"> <span>Submit</span></button>
+            </div>
+
+        </div>
+        <div class="wrapper">
+            <div class="holder ">
+                <div class="title" id="HolidaysTitle">Holidays coming up</div>
+                <div id="entryHolder">
+                    <!-- Holidays go here from JS-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
+
+<script type="text/javascript" src="main.js"></script></body>
+
+</html>
