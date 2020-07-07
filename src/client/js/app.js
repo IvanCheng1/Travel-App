@@ -7,6 +7,8 @@ export const postCity = async() => {
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
 
+    console.log(url)
+
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
