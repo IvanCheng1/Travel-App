@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Final project for Udacity's Front End Developer Programme.",
     "main": "index.js",
-    "engines": { "node": ">=0.12" },
+    "engines": { "node": "=0.12" },
     "scripts": {
         "test": "jest",
         "start": "node src/server/server.js",
