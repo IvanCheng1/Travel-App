@@ -5,8 +5,8 @@ console.log("port is:", process.env.PORT)
 const PORT = process.env.PORT || 8080;
 
 export const postCity = async() => {
-    var person = prompt("Port number", "8080");
-    const url = `http://localhost:${person}/geo`
+    var person = prompt("Port number", "http://localhost:8080");
+    const url = `${person}/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
 
