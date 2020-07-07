@@ -23,7 +23,7 @@ app.use(express.static('dist'))
 
 const regeneratorRuntime = require('regenerator-runtime')
 console.log(__dirname)
-console.log(process.env)
+
 
 // keys
 const API_GEO = process.env.GEONAMES_USERNAME
@@ -123,6 +123,9 @@ app.post('/pixabay', async(request, response) => {
 
 // Setup Server
 const PORT = process.env.PORT || 80;
-const server = app.listen(PORT, () => { console.log(`running on localhost:${PORT}`) });
+const server = app.listen(PORT, () => {
+    console.log(`running on localhost:${PORT}`);
+    console.log("env is:", process.env)
+});
 
 module.exports = app
