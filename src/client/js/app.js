@@ -4,14 +4,13 @@ const PORT = process.env.PORT || 8080;
 
 if (PORT === '5000') {
     // local
-    const baseUrl = 'http://localhost:5000'
+    var baseUrl = 'http://localhost:5000'
 } else {
     // heroku
-    const baseUrl = 'https://travel-app-weather.herokuapp.com'
+    var baseUrl = 'https://travel-app-weather.herokuapp.com'
 }
 
 export const postCity = async() => {
-    var person = prompt("Port number", "http://localhost:8080");
     const url = `${baseUrl}/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
