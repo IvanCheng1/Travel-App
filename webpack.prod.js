@@ -27,6 +27,14 @@ module.exports = {
             template: "./src/client/views/index.html",
             filename: "./index.html",
         }),
-        new WorkboxPlugin.GenerateSW()
+        new WorkboxPlugin.GenerateSW(),
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+            VERSION: JSON.stringify('5fa3b9'),
+            BROWSER_SUPPORTS_HTML5: true,
+            TWO: '1+1',
+            'typeof window': JSON.stringify('object'),
+            'process.env.PORT': JSON.stringify(process.env.PORT)
+        })
     ]
 }
