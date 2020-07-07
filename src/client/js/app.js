@@ -1,7 +1,8 @@
 /* Global Variables */
 var db = []
 console.log("env is:", process.env)
-const PORT = process.env.PORT || 80;
+console.log("process is:", process)
+const PORT = process.env.PORT || 8080;
 
 export const postCity = async() => {
     const url = `http://localhost:${PORT}/geo`
