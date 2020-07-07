@@ -34,7 +34,7 @@ module.exports = {
             BROWSER_SUPPORTS_HTML5: true,
             TWO: '1+1',
             'typeof window': JSON.stringify('object'),
-            'process.env.PORT': JSON.stringify(process.env.PORT)
+            'process.env': JSON.stringify(process.env)
         })
     ]
 }
