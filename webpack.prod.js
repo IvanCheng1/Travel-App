@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 const WorkboxPlugin = require('workbox-webpack-plugin')
 
 require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
+    PORT: `.env.${process.env.PORT}`,
 });
 
 module.exports = {
