@@ -5,7 +5,6 @@ console.log("process is:", process)
 const PORT = process.env.PORT || 8080;
 
 export const postCity = async() => {
-    alert("new")
     const url = `http://localhost:${PORT}/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
