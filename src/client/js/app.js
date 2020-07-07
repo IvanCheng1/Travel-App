@@ -5,7 +5,7 @@ var db = []
 const PORT = 80;
 
 export const postCity = async() => {
-    const url = `http://localhost:${PORT}/geo`
+    const url = `http://localhost:80/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
 
