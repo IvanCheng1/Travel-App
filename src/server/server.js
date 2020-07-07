@@ -122,7 +122,8 @@ app.post('/pixabay', async(request, response) => {
 
 
 // Setup Server
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+const PORT = 8000;
 const server = app.listen(PORT, () => { console.log(`running on localhost:${PORT}`) });
 
 module.exports = app
