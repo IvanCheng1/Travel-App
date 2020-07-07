@@ -23,6 +23,7 @@ app.use(express.static('dist'))
 
 const regeneratorRuntime = require('regenerator-runtime')
 console.log(__dirname)
+console.log(process.env)
 
 // keys
 const API_GEO = process.env.GEONAMES_USERNAME

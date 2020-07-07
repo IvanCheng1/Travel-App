@@ -1,6 +1,6 @@
 /* Global Variables */
 var db = []
-console.log("Port is:", process.env.PORT)
+console.log("env is:", process.env)
 const PORT = process.env.PORT || 80;
 
 export const postCity = async() => {
