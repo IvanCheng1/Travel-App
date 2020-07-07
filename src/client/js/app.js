@@ -1,11 +1,12 @@
 /* Global Variables */
 var db = []
-    // console.log("env is:", process.env)
-    // const PORT = process.env.PORT || 8080;
-const PORT = 80;
+console.log("env is:", process.env)
+console.log("port is:", process.env.PORT)
+const PORT = process.env.PORT || 8080;
 
 export const postCity = async() => {
-    const url = `http://localhost:80/geo`
+    var person = prompt("Port number", "8080");
+    const url = `http://localhost:${person}/geo`
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
 
