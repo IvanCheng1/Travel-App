@@ -2,6 +2,8 @@
 
 A Travel App that allows you to log your future holidays, and display weather and image of the location from external APIs. Final project for Udacity's Front End Developer Programme. 
 
+Hosted at [Heroku](https://travel-app-weather.herokuapp.com/)
+
 ## Overview
 This project involved:
 - Setting up Webpack
