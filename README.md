@@ -1,6 +1,6 @@
 # Travel App
 
-A Travel App that allows you to log your future holidays, and display weather and image of the location from external APIs. Final project for Udacity's Front End Developer Programme. 
+A Travel App that allows you to log your future holidays, and display weather and image of the location from external APIs. Final project for Udacity's Front End Developer Programme.
 
 Website is hosted at [Heroku](https://travel-app-weather.herokuapp.com/)
 
@@ -15,7 +15,7 @@ This project involved:
 
 ## Usage
 
-Enter the city destination, and optionally the country code to clarify the specific city. Enter the start and end date of the trip and click submit. 
+Enter the city destination, and optionally the country code to clarify the specific city. Enter the start and end date of the trip and click submit.
 
 It will then display the holiday with a picture of the destination, countdown, and the weather forecast, if the holiday is within a week or so. If the holiday is far in the future, it will display the current weather.
 
@@ -24,16 +24,16 @@ It will then display the holiday with a picture of the destination, countdown, a
 1. Clone the repo or download all the files
 2. Assuming you have Node.js installed, navigate to the project folder and install all the dependencies by `npm install`
 
-#### Development mode 
+#### Development mode
 3. Run the server by `npm run build-dev`
 4. The local server is hosted on http://localhost:8080/
 
-#### Development mode 
+#### Development mode
 3. Generate the dist files by `npm run build-prod`
 3. Run the server by `npm run start`
 4. The local server is hosted on http://localhost:5000/
 
-#### APIs 
+#### APIs
 Please sign up and register for API keys using the links below
 - [Geonames API](http://www.geonames.org/export/web-services.html)
 - [Weatherbit API](https://www.weatherbit.io/api)
